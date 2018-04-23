@@ -67,7 +67,6 @@ public class AffectivePlot extends JPanel {
 		range.setRange(0, AffectivePlotData.getInstance().getGraphLength());
 		range = plot.getRangeAxis();
 		range.setRange(0, 1);
-
 		ArrayList<Color> colors = affectiveDataModel.getAffectiveColors();
 		for (int i = 0; i < colors.size(); i++) {
 			renderer.setSeriesPaint(i, colors.get(i));
