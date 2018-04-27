@@ -5,6 +5,7 @@ import java.awt.event.WindowListener;
 
 import server.model.DetectionModel;
 import server.model.InteractiveModel;
+import server.model.ServerDataModel;
 import server.view.ConsoleView;
 import server.view.DetectionView;
 import server.view.InteractiveView;
@@ -22,11 +23,13 @@ public class ServerMainController implements ServerControllerInterface {
 	private InteractiveView interactiveView;
 	private ServerMainView serverMainView;
 	private ServerSocketEndpointController serverSocketEndpointController;
+	private ServerDataModel serverDataModel;
 
 	public ServerMainController() {
 		initilizeModels();
 		initializeViews();
 		initializeControllers();
+		new ServerSocketController().startServer(serverMainView);
 	}
 
 	@Override
@@ -42,6 +45,7 @@ public class ServerMainController implements ServerControllerInterface {
 	public void initilizeModels() {
 		detectionModel = new DetectionModel();
 		interactiveModel = new InteractiveModel();
+		serverDataModel = new ServerDataModel(detectionModel, interactiveModel);
 	}
 
 	@Override
@@ -49,7 +53,7 @@ public class ServerMainController implements ServerControllerInterface {
 		consoleController = new ConsoleController(consoleView);
 		detectionController = new DetectionController(detectionView, detectionModel);
 		interactiveController = new InteractiveController(interactiveView, interactiveModel);
-		//serverSocketEndpointController = new ServerSocketEndpointController(serverMainView);
+		serverSocketEndpointController = new ServerSocketEndpointController(serverMainView, serverDataModel);
 	}
 
 	public class ServerMainListener implements WindowListener {

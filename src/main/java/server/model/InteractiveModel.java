@@ -2,7 +2,7 @@ package server.model;
 
 public class InteractiveModel extends InteractiveBaseModel {
 	private boolean autoResetCheckBox;
-	private String lastTimeStamp;
+	private float lastTimeStamp;
 
 	public boolean isAutoResetCheckBox() {
 		return autoResetCheckBox;
@@ -12,11 +12,12 @@ public class InteractiveModel extends InteractiveBaseModel {
 		this.autoResetCheckBox = autoResetCheckBox;
 	}
 
-	public String getLastTimeStamp() {
+	public float getLastTimeStamp() {
 		return lastTimeStamp;
 	}
 
-	public void setLastTimeStamp(String lastTimeStamp) {
+	public void setLastTimeStamp(float lastTimeStamp) {
 		this.lastTimeStamp = lastTimeStamp;
 	}
+
 }

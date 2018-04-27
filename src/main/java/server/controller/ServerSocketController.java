@@ -31,7 +31,7 @@ public class ServerSocketController implements ServerSocketInterface {
 	ServletContextHandler context;
 
 	public static void main(String args[]) {
-		// new ServerApplicationController();
+		//new ServerMainController();
 	}
 
 	/**
@@ -40,13 +40,14 @@ public class ServerSocketController implements ServerSocketInterface {
 	 * @param serverView
 	 */
 	public void startServer(ServerMainView serverMainView) {
+		System.out.println("ASDASDASDASDDS");
 		final ExecutorService clientProcessingPool = Executors.newFixedThreadPool(10);
 		Runnable serverTask = new Runnable() {
 			@Override
 			public void run() {
 				server = new Server();
 				connector = new ServerConnector(server);
-				connector.setPort(8080);
+				connector.setPort(8081);
 				server.addConnector(connector);
 				// Setup the basic application "context" for this application at "/"
 				// This is also known as the handler tree (in jetty speak)

@@ -24,6 +24,7 @@ public class InteractiveView extends JPanel {
 	JSpinner timeInterval;
 	JButton sendButton;
 	private InteractiveModel interactiveModel;
+	private boolean oneTimeSend = false;
 
 	public JButton getSendButton() {
 		return sendButton;
@@ -70,12 +71,13 @@ public class InteractiveView extends JPanel {
 	public void addInteractiveActionListeners(ActionListener actionListener) {
 		autoResetCheckBox.addActionListener(actionListener);
 		sendButton.addActionListener(actionListener);
-		
+
 	}
 
 	public void addInteractiveChangeListener(ChangeListener changeListener) {
 		timeInterval.addChangeListener(changeListener);
 	}
+
 	/**
 	 * Action Listener implementation for auto-reset or one time send
 	 */
@@ -91,7 +93,7 @@ public class InteractiveView extends JPanel {
 			sendButton.setActionCommand(ServerConstants.STOP);
 		}
 		if (actionEvent.getSource() == sendButton && !autoResetCheckBox.isSelected()) {
-			interactiveModel.setAutoResetCheckBox(autoResetCheckBox.isSelected());
+			oneTimeSend = true;
 		}
 	}
 
@@ -100,7 +102,28 @@ public class InteractiveView extends JPanel {
 	 */
 	public void stateChanged(ChangeEvent changeEvent) {
 		if (changeEvent.getSource() == timeInterval) {
-			interactiveModel.setLastTimeStamp(timeInterval.getValue().toString());
+			interactiveModel.setLastTimeStamp(Float.parseFloat(timeInterval.getValue().toString()));
 		}
 	}
+
+	public boolean isOneTimeSend() {
+		return oneTimeSend;
+	}
+
+	public void setOneTimeSend(boolean oneTimeSend) {
+		this.oneTimeSend = oneTimeSend;
+	}
+
+	public JCheckBox getAutoResetCheckBox() {
+		return autoResetCheckBox;
+	}
+
+	public JSpinner getTimeInterval() {
+		return timeInterval;
+	}
+
+	public void setTimeInterval(JSpinner timeInterval) {
+		this.timeInterval = timeInterval;
+	}
+
 }

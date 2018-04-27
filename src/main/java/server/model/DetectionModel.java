@@ -9,6 +9,7 @@ public class DetectionModel extends DetectionBaseModel {
 	private String metricsExp;
 	private String eye;
 	private boolean eyeAutoResetCheckBox;
+	private float timeStampCounter;
 
 	public boolean isEyeAutoResetCheckBox() {
 		return eyeAutoResetCheckBox;
@@ -73,4 +74,13 @@ public class DetectionModel extends DetectionBaseModel {
 	public void setMetricsExp(String metricsExp) {
 		this.metricsExp = metricsExp;
 	}
+
+	public float getTimeStampCounter() {
+		return timeStampCounter;
+	}
+
+	public void setTimeStampCounter(float timeStampCounter) {
+		this.timeStampCounter = timeStampCounter;
+	}
+
 }

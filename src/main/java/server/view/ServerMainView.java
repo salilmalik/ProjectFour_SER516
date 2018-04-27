@@ -1,8 +1,7 @@
 package server.view;
 
 import java.awt.Color;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.Dimension;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
@@ -29,6 +28,8 @@ public class ServerMainView extends JFrame {
 	 * @param consoleView2
 	 */
 	public ServerMainView(ConsoleView consoleView, DetectionView detectionView, InteractiveView interactiveView) {
+		this.interactiveView = interactiveView;
+		this.detectionView = detectionView;
 		this.setTitle(ServerConstants.TITLE);
 		this.getContentPane().setBackground(Color.LIGHT_GRAY);
 		this.setResizable(true);
@@ -38,12 +39,40 @@ public class ServerMainView extends JFrame {
 		this.getContentPane().add(interactiveView);
 		this.getContentPane().add(detectionView);
 		this.getContentPane().add(consoleView);
+		pack();
+		setSize(1300, 700);
+		setResizable(true);
+		setVisible(true);
+	}
+
+	public ConsoleView getConsoleView() {
+		return consoleView;
+	}
+
+	public void setConsoleView(ConsoleView consoleView) {
+		this.consoleView = consoleView;
+	}
+
+	public InteractiveView getInteractiveView() {
+		return interactiveView;
+	}
+
+	public void setInteractiveView(InteractiveView interactiveView) {
+		this.interactiveView = interactiveView;
+	}
+
+	public DetectionView getDetectionView() {
+		return detectionView;
+	}
+
+	public void setDetectionView(DetectionView detectionView) {
+		this.detectionView = detectionView;
 	}
 
 	public void addWindowListener(WindowListener windowListener) {
-		this.addWindowListener(windowListener);
+		// this.addWindowListener(windowListener);
 	}
-	
+
 	public void logMessage(String message) {
 		consoleView.appendLogMessage(message);
 	}

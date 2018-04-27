@@ -26,7 +26,6 @@ public class DetectionController {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			
-			
 		}
 
 		@Override

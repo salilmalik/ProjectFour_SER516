@@ -27,8 +27,8 @@ public class DetectionView extends JPanel {
 	JComboBox<String> lowerfaceComboBox;
 	JComboBox<String> eyeComboBox;
 	JCheckBox eyeAutoResetCheckBox;
-	JCheckBox activateCheckBox;
-	JRadioButton eyeActivateRadioButton;
+	private JCheckBox activateCheckBox;
+	private JRadioButton eyeActivateRadioButton;
 	JComboBox<String> performanceMetricsComboBox;
 	JSpinner performanceMetricsSpinner;
 	JSpinner lowerfaceSpinner;
@@ -131,12 +131,12 @@ public class DetectionView extends JPanel {
 		eyeComboBox = new JComboBox<>(eyeItems);
 		eyeComboBox.setBounds(14, 163, 139, 25);
 		this.add(eyeComboBox);
-		eyeActivateRadioButton = new JRadioButton(ServerConstants.ACTIVATE);
-		eyeActivateRadioButton.setFont(ServerConstants.TEXT_FONT);
-		eyeActivateRadioButton.setBackground(Color.GRAY);
-		eyeActivateRadioButton.setForeground(Color.WHITE);
-		eyeActivateRadioButton.setBounds(185, 164, 95, 25);
-		this.add(eyeActivateRadioButton);
+		setEyeActivateRadioButton(new JRadioButton(ServerConstants.ACTIVATE));
+		getEyeActivateRadioButton().setFont(ServerConstants.TEXT_FONT);
+		getEyeActivateRadioButton().setBackground(Color.GRAY);
+		getEyeActivateRadioButton().setForeground(Color.WHITE);
+		getEyeActivateRadioButton().setBounds(185, 164, 95, 25);
+		this.add(getEyeActivateRadioButton());
 		eyeAutoResetCheckBox = new JCheckBox(ServerConstants.AUTO_RESETS);
 		eyeAutoResetCheckBox.setForeground(Color.WHITE);
 		eyeAutoResetCheckBox.setFont(ServerConstants.TEXT_FONT);
@@ -168,7 +168,7 @@ public class DetectionView extends JPanel {
 
 	public void addDetectionActionListeners(ActionListener detectionActionListener) {
 		upperfaceComboBox.addActionListener(detectionActionListener);
-		eyeActivateRadioButton.addActionListener(detectionActionListener);
+		getEyeActivateRadioButton().addActionListener(detectionActionListener);
 		eyeAutoResetCheckBox.addActionListener(detectionActionListener);
 		eyeAutoResetCheckBox.addActionListener(detectionActionListener);
 		performanceMetricsComboBox.addActionListener(detectionActionListener);
@@ -241,12 +241,12 @@ public class DetectionView extends JPanel {
 			detectionModel.setMetricsValue(metricsValue);
 		} else if (e.getSource() == eyeComboBox) {
 			String eye = (String) eyeComboBox.getSelectedItem();
-			if (eyeActivateRadioButton.isSelected()) {
+			if (getEyeActivateRadioButton().isSelected()) {
 				detectionModel.setEye(eye);
 			}
-		} else if (e.getSource() == eyeActivateRadioButton) {
+		} else if (e.getSource() == getEyeActivateRadioButton()) {
 			String eye = (String) eyeComboBox.getSelectedItem();
-			if (eyeActivateRadioButton.isSelected()) {
+			if (getEyeActivateRadioButton().isSelected()) {
 				detectionModel.setEye(eye);
 			}
 		} else if (e.getSource() == eyeAutoResetCheckBox) {
@@ -260,7 +260,23 @@ public class DetectionView extends JPanel {
 	 * Disables the eye active and eye auto reset
 	 */
 	public void disableActive() {
-		eyeActivateRadioButton.setSelected(false);
+		getEyeActivateRadioButton().setSelected(false);
 		eyeAutoResetCheckBox.setSelected(false);
+	}
+
+	public JRadioButton getEyeActivateRadioButton() {
+		return eyeActivateRadioButton;
+	}
+
+	public void setEyeActivateRadioButton(JRadioButton eyeActivateRadioButton) {
+		this.eyeActivateRadioButton = eyeActivateRadioButton;
+	}
+
+	public JCheckBox getActivateCheckBox() {
+		return activateCheckBox;
+	}
+
+	public void setActivateCheckBox(JCheckBox activateCheckBox) {
+		this.activateCheckBox = activateCheckBox;
 	}
 }
