@@ -1,5 +1,7 @@
 package server.model;
 
+
+
 public class DetectionModel extends DetectionBaseModel {
 	private float lowerfaceValue;
 	private String lowerfaceExp;
@@ -10,7 +12,14 @@ public class DetectionModel extends DetectionBaseModel {
 	private String eye;
 	private boolean eyeAutoResetCheckBox;
 	private float timeStampCounter;
+	private float counter;
+	private AffectiveDataModel affectiveDataModel;
+	private ExpressiveDataModel expressiveDataModel;
 
+	public DetectionModel(AffectiveDataModel affectiveDataModel, ExpressiveDataModel expressiveDataModel ){
+		this.affectiveDataModel = affectiveDataModel;
+		this.expressiveDataModel = expressiveDataModel;
+	}
 	public boolean isEyeAutoResetCheckBox() {
 		return eyeAutoResetCheckBox;
 	}

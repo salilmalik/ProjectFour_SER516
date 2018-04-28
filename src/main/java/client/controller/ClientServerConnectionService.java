@@ -39,9 +39,9 @@ public class ClientServerConnectionService {
 	 * @throws IOException 
 	 */
 
-	public void initializeServer() throws IOException {
+	public void initializeServer(String port, String typeServer) throws IOException {
 		//Runtime.getRuntime().exec("java ../../server.controller/ServerMainController");
-		new ServerMainController();
+		new ServerMainController(port, typeServer);
 	}
 
 	/**
@@ -63,4 +63,5 @@ public class ClientServerConnectionService {
 			JOptionPane.showMessageDialog(null, ClientConstants.CLIENT_ALREADY_CONNECTED);
 		}*/
 	}
+
 }

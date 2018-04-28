@@ -23,7 +23,7 @@ import client.model.MenuBarModel;
 
 public class MenuBarView extends JMenuBar {
 	private JMenu menu;
-	private JMenuItem launchServer;
+	private JMenuItem launchServer, launchFaceServer, launchHeartServer, launchSkinServer;
 	private JMenuItem connect;
 	private JMenuItem reconnect;
 	private JMenuItem stopWatch;
@@ -58,7 +58,7 @@ public class MenuBarView extends JMenuBar {
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, ClientConstants.IMAGE_PATH_EXCEPTION_MESSAGE + "Hello");
 		}
-		menu.setHorizontalTextPosition(SwingConstants.CENTER);
+		/*menu.setHorizontalTextPosition(SwingConstants.CENTER);
 		menu.setVerticalTextPosition(SwingConstants.BOTTOM);
 		menu.setFont(ClientConstants.TEXT_FONT);
 		menu.setBackground(Color.LIGHT_GRAY);
@@ -72,15 +72,27 @@ public class MenuBarView extends JMenuBar {
 		setForegroundBackground(reconnect, blackBorder, ClientConstants.TEXT_FONT);
 		connectMenu.add(connect);
 		connectMenu.add(new JPopupMenu.Separator());
-		connectMenu.add(reconnect);
+		connectMenu.add(reconnect);*/
 		stopWatch = new JMenuItem(ClientConstants.STOP_WATCH, new ImageIcon(resizeStopImg));
 		connectionLabel = new JMenuItem();
 		connectState(false);
-		menu.add(launchServer);
-		menu.add(new JPopupMenu.Separator());
-		menu.add(connectMenu);
-		setForegroundBackground(menu, blackBorder, ClientConstants.TEXT_FONT);
-		add(menu);
+
+		JMenu mainmenu = new JMenu("Menu");
+		mainmenu.setHorizontalTextPosition(SwingConstants.CENTER);
+		mainmenu.setVerticalTextPosition(SwingConstants.BOTTOM);
+		mainmenu.setFont(ClientConstants.TEXT_FONT);
+		mainmenu.setBackground(Color.LIGHT_GRAY);
+		mainmenu.add(setMenu(new JMenu("Launch Server"),blackBorder));
+		/*mainmenu.add(new JPopupMenu.Separator());*/
+		/*mainmenu.add(setMenu(new JMenu(ClientConstants.CONNECT),blackBorder));
+		mainmenu.add(new JPopupMenu.Separator());*/
+		/*mainmenu.add(setMenu(new JMenu("Face Server"),blackBorder));
+		mainmenu.add(new JPopupMenu.Separator());
+		mainmenu.add(setMenu(new JMenu("Heart Server"),blackBorder));
+		mainmenu.add(new JPopupMenu.Separator());
+		mainmenu.add(setMenu(new JMenu("Skin Server"),blackBorder));*/
+		setForegroundBackground(mainmenu, blackBorder, ClientConstants.TEXT_FONT);
+		add(mainmenu);
 		setForegroundBackground(stopWatch, ClientConstants.TEXT_FONT);
 		add(stopWatch);
 		setForegroundBackground(connectionLabel, ClientConstants.TEXT_FONT);
@@ -89,10 +101,42 @@ public class MenuBarView extends JMenuBar {
 	}
 
 	public void addConnectionListener(ActionListener connectListener) {
-		connect.addActionListener(connectListener);
-		launchServer.addActionListener(connectListener);
+		launchFaceServer.addActionListener(connectListener);
+		launchHeartServer.addActionListener(connectListener);
+		launchSkinServer.addActionListener(connectListener);
 	}
 
+	/**
+	 * connectState method changes the label and icon on menubar.
+	 *
+	 * @param blackBorder
+	 *            : border color
+	 * @param menu:
+	 *            menu item to set on menubar.
+	 */
+	private JMenu setMenu(JMenu menu, Border blackBorder){
+
+		menu.setHorizontalTextPosition(SwingConstants.CENTER);
+		menu.setVerticalTextPosition(SwingConstants.BOTTOM);
+		menu.setFont(ClientConstants.TEXT_FONT);
+		menu.setBackground(Color.LIGHT_GRAY);
+		launchFaceServer = new JMenuItem("Face Server");
+		setForegroundBackground(launchFaceServer, blackBorder, ClientConstants.TEXT_FONT);
+		launchHeartServer = new JMenuItem("Heart Server");
+		setForegroundBackground(launchHeartServer, blackBorder, ClientConstants.TEXT_FONT);
+		launchSkinServer = new JMenuItem("Skin Server");
+		setForegroundBackground(launchSkinServer, blackBorder, ClientConstants.TEXT_FONT);
+
+
+		setForegroundBackground(menu, blackBorder, ClientConstants.TEXT_FONT);
+		menu.add(launchFaceServer);
+		menu.add(new JPopupMenu.Separator());
+		menu.add(launchHeartServer);
+		menu.add(new JPopupMenu.Separator());
+		menu.add(launchSkinServer);
+		/*menu.add(connect);*/
+		return  menu;
+	}
 	/**
 	 * connectState method changes the label and icon on menubar.
 	 *

@@ -3,9 +3,7 @@ package server.controller;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import server.model.DetectionModel;
-import server.model.InteractiveModel;
-import server.model.ServerDataModel;
+import server.model.*;
 import server.view.ConsoleView;
 import server.view.DetectionView;
 import server.view.InteractiveView;
@@ -24,8 +22,10 @@ public class ServerMainController implements ServerControllerInterface {
 	private ServerMainView serverMainView;
 	private ServerSocketEndpointController serverSocketEndpointController;
 	private ServerDataModel serverDataModel;
+	private AffectiveDataModel affectiveDataModel;
+	private ExpressiveDataModel expressiveDataModel;
 
-	public ServerMainController() {
+	public ServerMainController(String port, String typeServer) {
 		initilizeModels();
 		initializeViews();
 		initializeControllers();
@@ -44,7 +44,9 @@ public class ServerMainController implements ServerControllerInterface {
 
 	@Override
 	public void initilizeModels() {
-		detectionModel = new DetectionModel();
+		affectiveDataModel = new AffectiveDataModel();
+		expressiveDataModel = new ExpressiveDataModel();
+		detectionModel = new DetectionModel(affectiveDataModel, expressiveDataModel);
 		interactiveModel = new InteractiveModel();
 		serverDataModel = new ServerDataModel(detectionModel, interactiveModel);
 		ServerFactory.setServerDataModel(serverDataModel);
