@@ -47,7 +47,7 @@ public class ServerSocketController implements ServerSocketInterface {
 			public void run() {
 				server = new Server();
 				connector = new ServerConnector(server);
-				connector.setPort(8081);
+				connector.setPort(8080);
 				server.addConnector(connector);
 				// Setup the basic application "context" for this application at "/"
 				// This is also known as the handler tree (in jetty speak)

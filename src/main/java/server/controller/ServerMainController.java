@@ -24,6 +24,7 @@ public class ServerMainController implements ServerControllerInterface {
 	private ServerDataModel serverDataModel;
 	private AffectiveDataModel affectiveDataModel;
 	private ExpressiveDataModel expressiveDataModel;
+	private PrimaryDataModel primaryDataModel;
 
 	public ServerMainController(String port, String typeServer) {
 		initilizeModels();
@@ -46,7 +47,8 @@ public class ServerMainController implements ServerControllerInterface {
 	public void initilizeModels() {
 		affectiveDataModel = new AffectiveDataModel();
 		expressiveDataModel = new ExpressiveDataModel();
-		detectionModel = new DetectionModel(affectiveDataModel, expressiveDataModel);
+		primaryDataModel = new PrimaryDataModel(affectiveDataModel, expressiveDataModel);
+		detectionModel = new DetectionModel(primaryDataModel);
 		interactiveModel = new InteractiveModel();
 		serverDataModel = new ServerDataModel(detectionModel, interactiveModel);
 		ServerFactory.setServerDataModel(serverDataModel);

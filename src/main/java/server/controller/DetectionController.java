@@ -21,16 +21,17 @@ public class DetectionController {
 		this.detectionView.addDetectionChangeListener(new DetectionListener());
 	}
 
+
 	public class DetectionListener implements ActionListener, ChangeListener{
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
-			
+			detectionView.stateChanged(e);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			detectionView.actionPerformed(e);
 			
 		}
 		

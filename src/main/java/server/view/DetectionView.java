@@ -201,20 +201,48 @@ public class DetectionView extends JPanel {
 	 */
 	public void stateChanged(ChangeEvent e) {
 		if (e.getSource() == lowerfaceSpinner) {
+			resetLowerface();
 			float lowerfaceValue = (float) ((double) lowerfaceSpinner.getValue());
 			String lowerfaceExp = (String) lowerfaceComboBox.getSelectedItem();
-			detectionModel.setLowerfaceValue(lowerfaceValue);
-			detectionModel.setLowerfaceExp(lowerfaceExp);
+			if (lowerfaceExp.equals(ServerConstants.SMILE)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setSmile(lowerfaceValue);
+			} else if (lowerfaceExp.equals(ServerConstants.CLENCH)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setClench(lowerfaceValue);
+			} else if (lowerfaceExp.equals(ServerConstants.SMIRK_LEFT)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setSmirkLeft(lowerfaceValue);
+			} else if (lowerfaceExp.equals(ServerConstants.SMIRK_RIGHT)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setSmirkRight(lowerfaceValue);
+			} else if (lowerfaceExp.equals(ServerConstants.LAUGH)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setLaugh(lowerfaceValue);
+			}
+
 		} else if (e.getSource() == upperfaceSpinner) {
+			resetUpperface();
 			float upperfaceValue = (float) ((double) upperfaceSpinner.getValue());
 			String upperfaceExp = (String) upperfaceComboBox.getSelectedItem();
-			detectionModel.setUpperfaceExp(upperfaceExp);
-			detectionModel.setUpperfaceValue(upperfaceValue);
+
+			if (upperfaceExp.equals(ServerConstants.RAISE_BROW)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setRaiseBrow(upperfaceValue);
+			} else if (upperfaceExp.equals(ServerConstants.FURROW_BROW)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setFurrowBrow(upperfaceValue);
+			}
 		} else if (e.getSource() == performanceMetricsSpinner) {
 			float metricsValue = (float) ((double) performanceMetricsSpinner.getValue());
 			String metricsExp = (String) performanceMetricsComboBox.getSelectedItem();
-			detectionModel.setMetricsExp(metricsExp);
-			detectionModel.setMetricsValue(metricsValue);
+			resetPerformanceMetrics();
+			if (metricsExp.equals(ServerConstants.INTEREST)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setInterest(metricsValue);
+			} else if (metricsExp.equals(ServerConstants.ENGAGEMENT)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setEngagement(metricsValue);
+			} else if (metricsExp.equals(ServerConstants.STRESS)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setStress(metricsValue);
+			} else if (metricsExp.equals(ServerConstants.RELAXATION)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setRelaxation(metricsValue);
+			} else if (metricsExp.equals(ServerConstants.EXCITEMENT)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setExcitement(metricsValue);
+			} else if (metricsExp.equals(ServerConstants.FOCUS)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setFocus(metricsValue);
+			}
 		}
 	}
 
@@ -224,38 +252,131 @@ public class DetectionView extends JPanel {
 	 * @param e
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == upperfaceComboBox) {
+		if (e.getSource() == upperfaceSpinner) {
+			resetUpperface();
 			float upperfaceValue = (float) ((double) upperfaceSpinner.getValue());
 			String upperfaceExp = (String) upperfaceComboBox.getSelectedItem();
-			detectionModel.setUpperfaceExp(upperfaceExp);
-			detectionModel.setUpperfaceValue(upperfaceValue);
-		} else if (e.getSource() == lowerfaceComboBox) {
+
+			if (upperfaceExp.equals(ServerConstants.RAISE_BROW)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setRaiseBrow(upperfaceValue);
+			} else if (upperfaceExp.equals(ServerConstants.FURROW_BROW)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setFurrowBrow(upperfaceValue);
+			}
+		} else if (e.getSource() == lowerfaceSpinner) {
+			resetLowerface();
 			float lowerfaceValue = (float) ((double) lowerfaceSpinner.getValue());
 			String lowerfaceExp = (String) lowerfaceComboBox.getSelectedItem();
-			detectionModel.setLowerfaceValue(lowerfaceValue);
-			detectionModel.setLowerfaceExp(lowerfaceExp);
-		} else if (e.getSource() == performanceMetricsComboBox) {
+			if (lowerfaceExp.equals(ServerConstants.SMILE)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setSmile(lowerfaceValue);
+			} else if (lowerfaceExp.equals(ServerConstants.CLENCH)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setClench(lowerfaceValue);
+			} else if (lowerfaceExp.equals(ServerConstants.SMIRK_LEFT)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setSmirkLeft(lowerfaceValue);
+			} else if (lowerfaceExp.equals(ServerConstants.SMIRK_RIGHT)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setSmirkRight(lowerfaceValue);
+			} else if (lowerfaceExp.equals(ServerConstants.LAUGH)) {
+				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setLaugh(lowerfaceValue);
+			}
+
+		} else if (e.getSource() == performanceMetricsSpinner) {
 			float metricsValue = (float) ((double) performanceMetricsSpinner.getValue());
 			String metricsExp = (String) performanceMetricsComboBox.getSelectedItem();
-			detectionModel.setMetricsExp(metricsExp);
-			detectionModel.setMetricsValue(metricsValue);
-		} else if (e.getSource() == eyeComboBox) {
-			String eye = (String) eyeComboBox.getSelectedItem();
-			if (getEyeActivateRadioButton().isSelected()) {
-				detectionModel.setEye(eye);
+			resetPerformanceMetrics();
+			if (metricsExp.equals(ServerConstants.INTEREST)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setInterest(metricsValue);
+			} else if (metricsExp.equals(ServerConstants.ENGAGEMENT)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setEngagement(metricsValue);
+			} else if (metricsExp.equals(ServerConstants.STRESS)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setStress(metricsValue);
+			} else if (metricsExp.equals(ServerConstants.RELAXATION)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setRelaxation(metricsValue);
+			} else if (metricsExp.equals(ServerConstants.EXCITEMENT)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setExcitement(metricsValue);
+			} else if (metricsExp.equals(ServerConstants.FOCUS)) {
+				detectionModel.getPrimaryDataModel().getAffectiveDataModel().setFocus(metricsValue);
 			}
-		} else if (e.getSource() == getEyeActivateRadioButton()) {
+		}else if (e.getSource() == eyeComboBox) {
 			String eye = (String) eyeComboBox.getSelectedItem();
-			if (getEyeActivateRadioButton().isSelected()) {
-				detectionModel.setEye(eye);
+			if (eyeActivateRadioButton.isSelected()) {
+				changeEye(eye);
+			}
+
+		} else if (e.getSource() == eyeActivateRadioButton) {
+			String eye = (String) eyeComboBox.getSelectedItem();
+			if (eyeActivateRadioButton.isSelected()) {
+				changeEye(eye);
 			}
 		} else if (e.getSource() == eyeAutoResetCheckBox) {
+			String eye = (String) eyeComboBox.getSelectedItem();
 			if (eyeAutoResetCheckBox.isSelected()) {
-				detectionModel.setEyeAutoResetCheckBox(true);
+				changeEye(eye);
+			}
+			else {
+				resetEye();
 			}
 		}
 	}
+	/**
+	 * Updates the eye expression data based on the selected combobox values.
+	 *
+	 * @param eye
+	 *            the current eye value
+	 */
+	public void changeEye(String eye) {
+		resetEye();
+		if (eye.equals(ServerConstants.BLINK)) {
+			detectionModel.getPrimaryDataModel().getExpressiveDataModel().setBlink(true);
+		} else if (eye.equals(ServerConstants.WINK_LEFT)) {
+			detectionModel.getPrimaryDataModel().getExpressiveDataModel().setWinkLeft(true);
+		} else if (eye.equals(ServerConstants.WINK_RIGHT)) {
+			detectionModel.getPrimaryDataModel().getExpressiveDataModel().setWinkRight(true);
+		} else if (eye.equals(ServerConstants.LOOK_LEFT)) {
+			detectionModel.getPrimaryDataModel().getExpressiveDataModel().setLookLeft(true);
+		} else if (eye.equals(ServerConstants.LOOK_RIGHT)) {
+			detectionModel.getPrimaryDataModel().getExpressiveDataModel().setLookRight(true);
+		}
+	}
+	/**
+	 * resets all eye expression data to false
+	 */
+	public void resetEye() {
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setBlink(false);
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setWinkLeft(false);
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setWinkRight(false);
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setLookLeft(false);
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setLookRight(false);
+	}
 
+	/**
+	 * resets all lowerface expression data to 0
+	 */
+	public void resetLowerface() {
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setSmile(0);
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setClench(0);
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setSmirkLeft(0);
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setSmirkRight(0);
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setLaugh(0);
+	}
+
+	/**
+	 * resets all upperface expression data to 0
+	 */
+	public void resetUpperface() {
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setRaiseBrow(0);
+		detectionModel.getPrimaryDataModel().getExpressiveDataModel().setFurrowBrow(0);
+	}
+
+	/**
+	 * resets all performance Metrics expression data to 0
+	 */
+	public void resetPerformanceMetrics() {
+		detectionModel.getPrimaryDataModel().getAffectiveDataModel().setInterest(0);
+		detectionModel.getPrimaryDataModel().getAffectiveDataModel().setEngagement(0);
+		detectionModel.getPrimaryDataModel().getAffectiveDataModel().setStress(0);
+		detectionModel.getPrimaryDataModel().getAffectiveDataModel().setRelaxation(0);
+		detectionModel.getPrimaryDataModel().getAffectiveDataModel().setRelaxation(0);
+		detectionModel.getPrimaryDataModel().getAffectiveDataModel().setExcitement(0);
+	}
 	/**
 	 * Disables the eye active and eye auto reset
 	 */

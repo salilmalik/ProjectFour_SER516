@@ -43,7 +43,9 @@ public class ServerSocketEndpointController{
 			public void run() {
 				while (true) {
 					if (queue != null) {
-						if (serverMainView.getInteractiveView().getAutoResetCheckBox().isSelected() == true) {
+						if (serverMainView.getInteractiveView().getAutoResetCheckBox().isSelected() == true &&
+								serverMainView.getInteractiveView().isOneTimeSend() == true) {
+
 							sendAndUpdateCounter();
 						}
 						if (serverMainView.getInteractiveView().isOneTimeSend() == true) {
@@ -64,13 +66,13 @@ public class ServerSocketEndpointController{
 			 * Sends data to console log,parses json and change counter
 			 */
 			private void sendAndUpdateCounter() {
-				float interval = serverDataModel.getDetectionModel().getTimeStampCounter()
+				float interval = serverDataModel.getDetectionModel().getPrimaryDataModel().getCounter()
 						+ serverDataModel.getInteractiveModel().getLastTimeStamp();
 				serverDataModel.setTimestamp(interval);
 				String data = gson.toJson(serverDataModel);
 				// this.serverMainView.getConsolelogMessage(data);
 				System.out.println("data: " + data);
-				serverDataModel.getDetectionModel().setTimeStampCounter(interval);
+				serverDataModel.getDetectionModel().getPrimaryDataModel().setCounter(interval);
 				sendAll(data);
 				if (serverMainView.getDetectionView().getEyeActivateRadioButton().isSelected() == true) {
 					serverMainView.getDetectionView().getEyeActivateRadioButton().setSelected(false);

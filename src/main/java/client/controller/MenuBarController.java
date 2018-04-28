@@ -46,11 +46,11 @@ public class MenuBarController {
 
 					launchPortDialogBox("skin");
 
-			}else if (((JMenuItem) connectEvent.getSource()).getText() == ClientConstants.CONNECT) {
+			}/*else if (((JMenuItem) connectEvent.getSource()).getText() == ClientConstants.CONNECT) {
 				if (clientServerConnectionService != null) {
 					launchDialogBox();
 				}
-			}
+			}*/
 		}
 
 		/**
@@ -99,7 +99,7 @@ public class MenuBarController {
 			int result = JOptionPane.showConfirmDialog(null, myPanel, ClientConstants.ENTER_IP,
 					JOptionPane.OK_CANCEL_OPTION);
 			if (result == JOptionPane.OK_OPTION) {
-				clientServerConnectionService.startServer("localhost", "8081");
+				clientServerConnectionService.startServer("localhost", "8080");
 			}
 		}
 

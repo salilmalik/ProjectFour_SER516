@@ -3,22 +3,13 @@ package server.model;
 
 
 public class DetectionModel extends DetectionBaseModel {
-	private float lowerfaceValue;
-	private String lowerfaceExp;
-	private float upperfaceValue;
-	private String upperfaceExp;
-	private float metricsValue;
-	private String metricsExp;
-	private String eye;
 	private boolean eyeAutoResetCheckBox;
-	private float timeStampCounter;
-	private float counter;
-	private AffectiveDataModel affectiveDataModel;
-	private ExpressiveDataModel expressiveDataModel;
+	private PrimaryDataModel primaryDataModel;
 
-	public DetectionModel(AffectiveDataModel affectiveDataModel, ExpressiveDataModel expressiveDataModel ){
-		this.affectiveDataModel = affectiveDataModel;
-		this.expressiveDataModel = expressiveDataModel;
+
+
+	public DetectionModel(PrimaryDataModel primaryDataModel ){
+		this.primaryDataModel = primaryDataModel;
 	}
 	public boolean isEyeAutoResetCheckBox() {
 		return eyeAutoResetCheckBox;
@@ -28,68 +19,11 @@ public class DetectionModel extends DetectionBaseModel {
 		this.eyeAutoResetCheckBox = eyeAutoResetCheckBox;
 	}
 
-	public String getEye() {
-		return eye;
+	public PrimaryDataModel getPrimaryDataModel() {
+		return primaryDataModel;
 	}
 
-	public void setEye(String eye) {
-		this.eye = eye;
+	public void setPrimaryDataModel(PrimaryDataModel primaryDataModel) {
+		this.primaryDataModel = primaryDataModel;
 	}
-
-	public float getLowerfaceValue() {
-		return lowerfaceValue;
-	}
-
-	public void setLowerfaceValue(float lowerfaceValue) {
-		this.lowerfaceValue = lowerfaceValue;
-	}
-
-	public String getLowerfaceExp() {
-		return lowerfaceExp;
-	}
-
-	public void setLowerfaceExp(String lowerfaceExp) {
-		this.lowerfaceExp = lowerfaceExp;
-	}
-
-	public float getUpperfaceValue() {
-		return upperfaceValue;
-	}
-
-	public void setUpperfaceValue(float upperfaceValue) {
-		this.upperfaceValue = upperfaceValue;
-	}
-
-	public String getUpperfaceExp() {
-		return upperfaceExp;
-	}
-
-	public void setUpperfaceExp(String upperfaceExp) {
-		this.upperfaceExp = upperfaceExp;
-	}
-
-	public float getMetricsValue() {
-		return metricsValue;
-	}
-
-	public void setMetricsValue(float metricsValue) {
-		this.metricsValue = metricsValue;
-	}
-
-	public String getMetricsExp() {
-		return metricsExp;
-	}
-
-	public void setMetricsExp(String metricsExp) {
-		this.metricsExp = metricsExp;
-	}
-
-	public float getTimeStampCounter() {
-		return timeStampCounter;
-	}
-
-	public void setTimeStampCounter(float timeStampCounter) {
-		this.timeStampCounter = timeStampCounter;
-	}
-
 }
