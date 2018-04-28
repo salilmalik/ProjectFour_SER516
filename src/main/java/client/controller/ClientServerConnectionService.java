@@ -2,6 +2,7 @@ package client.controller;
 
 import java.io.IOException;
 
+import server.controller.ServerApplicationController;
 import server.controller.ServerMainController;
 
 /**
@@ -41,7 +42,7 @@ public class ClientServerConnectionService {
 
 	public void initializeServer() throws IOException {
 		//Runtime.getRuntime().exec("java ../../server.controller/ServerMainController");
-		new ServerMainController();
+		new ServerApplicationController("8081","face");
 	}
 
 	/**

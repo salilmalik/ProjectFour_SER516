@@ -11,7 +11,7 @@ import javax.websocket.Session;
 import com.google.gson.Gson;
 
 import client.constants.ClientConstants;
-import client.model.FaceData;
+import client.model.Data;
 
 /**
  * The ClientSocketEndpoint class creates socket endpoint of client Takes care
@@ -25,7 +25,7 @@ public class ClientSocketEndpoint {
 	static WebSocketClientMain webSocketClientMain;
 	//static MenuBarListener clockListener;
 	private static Gson gson = new Gson();
-	private FaceData faceData;
+	private Data Data;
 
 	public static void setMainClientWebSocket(WebSocketClientMain webSocketClientMainVal) {
 		webSocketClientMain = webSocketClientMainVal;

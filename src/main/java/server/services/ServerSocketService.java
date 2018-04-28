@@ -36,6 +36,7 @@ public class ServerSocketService implements ServerListenerInterface {
 
 	public ServerSocketService(String port){
 		this.Port = Integer.parseInt(port);
+		System.out.println("Port on Server: "+this.Port);
 	}
 	/**
 	 * Starts the server and binds the view to it
@@ -48,6 +49,7 @@ public class ServerSocketService implements ServerListenerInterface {
 			@Override
 			public void run() {
 				server = new Server();
+				System.out.println("Port: "+Port);
 				connector = new ServerConnector(server);
 				connector.setPort(Port);
 				server.addConnector(connector);

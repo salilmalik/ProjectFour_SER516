@@ -53,6 +53,7 @@ public class WebSocketClientMain {
 				WebSocketContainer container = null;
 				try {
 					container = ContainerProvider.getWebSocketContainer();
+					System.out.println("URL: "+url);
 					session = container.connectToServer(ClientSocketEndpoint.class, URI.create(url));
 					//ClientDataSingleton.getInstance().setSessionMaintained(true);
 					wait4TerminateSignal();
