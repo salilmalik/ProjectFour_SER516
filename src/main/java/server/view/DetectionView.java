@@ -201,9 +201,9 @@ public class DetectionView extends JPanel {
 	 */
 	public void stateChanged(ChangeEvent e) {
 		if (e.getSource() == lowerfaceSpinner) {
-			resetLowerface();
 			float lowerfaceValue = (float) ((double) lowerfaceSpinner.getValue());
 			String lowerfaceExp = (String) lowerfaceComboBox.getSelectedItem();
+			resetLowerface();
 			if (lowerfaceExp.equals(ServerConstants.SMILE)) {
 				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setSmile(lowerfaceValue);
 			} else if (lowerfaceExp.equals(ServerConstants.CLENCH)) {
@@ -217,10 +217,10 @@ public class DetectionView extends JPanel {
 			}
 
 		} else if (e.getSource() == upperfaceSpinner) {
-			resetUpperface();
+
 			float upperfaceValue = (float) ((double) upperfaceSpinner.getValue());
 			String upperfaceExp = (String) upperfaceComboBox.getSelectedItem();
-
+			resetUpperface();
 			if (upperfaceExp.equals(ServerConstants.RAISE_BROW)) {
 				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setRaiseBrow(upperfaceValue);
 			} else if (upperfaceExp.equals(ServerConstants.FURROW_BROW)) {
@@ -252,7 +252,7 @@ public class DetectionView extends JPanel {
 	 * @param e
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == upperfaceSpinner) {
+		if (e.getSource() == upperfaceComboBox) {
 			resetUpperface();
 			float upperfaceValue = (float) ((double) upperfaceSpinner.getValue());
 			String upperfaceExp = (String) upperfaceComboBox.getSelectedItem();
@@ -262,7 +262,7 @@ public class DetectionView extends JPanel {
 			} else if (upperfaceExp.equals(ServerConstants.FURROW_BROW)) {
 				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setFurrowBrow(upperfaceValue);
 			}
-		} else if (e.getSource() == lowerfaceSpinner) {
+		} else if (e.getSource() == lowerfaceComboBox) {
 			resetLowerface();
 			float lowerfaceValue = (float) ((double) lowerfaceSpinner.getValue());
 			String lowerfaceExp = (String) lowerfaceComboBox.getSelectedItem();
@@ -278,7 +278,7 @@ public class DetectionView extends JPanel {
 				detectionModel.getPrimaryDataModel().getExpressiveDataModel().setLaugh(lowerfaceValue);
 			}
 
-		} else if (e.getSource() == performanceMetricsSpinner) {
+		} else if (e.getSource() == performanceMetricsComboBox) {
 			float metricsValue = (float) ((double) performanceMetricsSpinner.getValue());
 			String metricsExp = (String) performanceMetricsComboBox.getSelectedItem();
 			resetPerformanceMetrics();
