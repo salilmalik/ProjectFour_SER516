@@ -39,7 +39,7 @@ public class ServerSocketController implements ServerSocketInterface {
 	 * 
 	 * @param serverView
 	 */
-	public void startServer(ServerMainView serverMainView) {
+	public void startServer(ServerMainView serverMainView,ServerSocketEndpointController serverSocketEndpointController) {
 		System.out.println("ASDASDASDASDDS");
 		final ExecutorService clientProcessingPool = Executors.newFixedThreadPool(10);
 		Runnable serverTask = new Runnable() {

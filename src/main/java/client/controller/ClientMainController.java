@@ -38,6 +38,7 @@ public class ClientMainController implements ClientControllerInterface {
 	private ExpressiveDataModel expressiveDataModel;
 	private MenuBarModel menuBarModel;
 	private MenuBarController menuBarController;
+	private ClientServerConnectionService clientServerConnectionService;
 
 	/**
 	 * Starting point of client
@@ -49,7 +50,7 @@ public class ClientMainController implements ClientControllerInterface {
 		clientMainController.initilizeModels();
 		clientMainController.initializeViews();
 		clientMainController.initializeControllers();
-		
+
 	}
 
 	@Override
@@ -68,7 +69,8 @@ public class ClientMainController implements ClientControllerInterface {
 		expressiveGraphContoller = new ExpressiveGraphController(expressiveGraphView, expressiveDataModel);
 		expressiveController = new ExpressiveController(expressiveFaceContoller, expressiveGraphContoller,
 				expressiveView);
-		menuBarController = new MenuBarController(menuBarView,menuBarModel);
+		clientServerConnectionService = new ClientServerConnectionService();
+		menuBarController = new MenuBarController(menuBarView, menuBarModel, clientServerConnectionService);
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class ServerMainController implements ServerControllerInterface {
 		initilizeModels();
 		initializeViews();
 		initializeControllers();
-		new ServerSocketController().startServer(serverMainView);
+		new ServerSocketController().startServer(serverMainView,serverSocketEndpointController);
 	}
 
 	@Override
@@ -38,6 +38,7 @@ public class ServerMainController implements ServerControllerInterface {
 		detectionView = new DetectionView(detectionModel);
 		interactiveView = new InteractiveView(interactiveModel);
 		serverMainView = new ServerMainView(consoleView, detectionView, interactiveView);
+		ServerFactory.setServerMainView(serverMainView);
 		serverMainView.addWindowListener(new ServerMainListener());
 	}
 
@@ -46,6 +47,7 @@ public class ServerMainController implements ServerControllerInterface {
 		detectionModel = new DetectionModel();
 		interactiveModel = new InteractiveModel();
 		serverDataModel = new ServerDataModel(detectionModel, interactiveModel);
+		ServerFactory.setServerDataModel(serverDataModel);
 	}
 
 	@Override
@@ -53,7 +55,7 @@ public class ServerMainController implements ServerControllerInterface {
 		consoleController = new ConsoleController(consoleView);
 		detectionController = new DetectionController(detectionView, detectionModel);
 		interactiveController = new InteractiveController(interactiveView, interactiveModel);
-		serverSocketEndpointController = new ServerSocketEndpointController(serverMainView, serverDataModel);
+		//serverSocketEndpointController = new ServerSocketEndpointController(serverMainView, serverDataModel);
 	}
 
 	public class ServerMainListener implements WindowListener {

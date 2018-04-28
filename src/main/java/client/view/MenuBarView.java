@@ -4,29 +4,21 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-
 import client.constants.ClientConstants;
-import client.controller.ClientServerConnectionService;
 import client.model.MenuBarModel;
 
 public class MenuBarView extends JMenuBar {
@@ -37,10 +29,8 @@ public class MenuBarView extends JMenuBar {
 	private JMenuItem stopWatch;
 	private JMenuItem connectionLabel;
 	private BufferedImage greenIcon, redIcon;
-	ClientServerConnectionService clientServerConnectionService;
 
 	public MenuBarView(MenuBarModel menuBarModel) {
-		clientServerConnectionService = new ClientServerConnectionService();
 		menu = new JMenu(ClientConstants.MENU);
 		Border blackBorder = BorderFactory.createMatteBorder(5, 5, 5, 5, Color.LIGHT_GRAY);
 		BufferedImage stopImage, redImage, greenImage;
@@ -185,52 +175,6 @@ public class MenuBarView extends JMenuBar {
 		g2.drawImage(menuImage, 0, 0, 30, 24, null);
 		g2.dispose();
 		return g2;
-	}
-
-	/**
-	 * actionPerformed method handles the on click event from menu.
-	 *
-	 * @param e
-	 *            : ActionEvent performed on MenuBar
-	 */
-
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == launchServer) {
-			try {
-				clientServerConnectionService.initializeServer();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		} else if (e.getSource() == connect) {
-			if (clientServerConnectionService != null) {
-				launchDialogBox();
-			}
-		} else if (e.getSource() == reconnect) {
-
-			// clientServerConnectionService.reconnectServer(null);
-		}
-	}
-
-	/**
-	 * launchDialogBox method provides a dialogue box for IP and port user inputs
-	 */
-	private void launchDialogBox() {
-		JTextField ipField = new JTextField(15);
-		JTextField ipPort = new JTextField(15);
-		ipField.setText(ClientConstants.LOCALHOST);
-		ipPort.setText(ClientConstants.PORT_NUMBER);
-		JPanel myPanel = new JPanel();
-		myPanel.add(new JLabel(ClientConstants.IP_STRING));
-		myPanel.add(ipField);
-		myPanel.add(Box.createHorizontalStrut(15));
-		myPanel.add(new JLabel(ClientConstants.PORT_STRING));
-		myPanel.add(ipPort);
-		int result = JOptionPane.showConfirmDialog(null, myPanel, ClientConstants.ENTER_IP,
-				JOptionPane.OK_CANCEL_OPTION);
-		if (result == JOptionPane.OK_OPTION) {
-			clientServerConnectionService.startServer("0.0.0.0", "8081");
-		}
 	}
 
 	/**
