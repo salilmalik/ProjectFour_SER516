@@ -12,7 +12,14 @@ import server.controller.ServerMainController;
  * @version 1.0
  */
 public class ClientServerConnectionService {
+	private AffectiveContoller affectiveContoller;
+	private ExpressiveController expressiveController;
 	client.controller.WebSocketClientMain webSocketClientMain = new client.controller.WebSocketClientMain();
+
+	public ClientServerConnectionService(AffectiveContoller affectiveContoller, ExpressiveController expressiveController) {
+		this.affectiveContoller = affectiveContoller;
+		this.expressiveController = expressiveController;
+	}
 
 	public void startServer(String ip, String port) {
 		establishServerClientConnection(ip, port);
@@ -40,7 +47,6 @@ public class ClientServerConnectionService {
 	 */
 
 	public void initializeServer(String port, String typeServer) throws IOException {
-		//Runtime.getRuntime().exec("java ../../server.controller/ServerMainController");
 		new ServerMainController(port, typeServer);
 	}
 
@@ -54,7 +60,8 @@ public class ClientServerConnectionService {
 	 *            String denotes user input for port number
 	 */
 	private void establishServerClientConnection(String ip, String port) {
-		webSocketClientMain.connectToServer(ip, port);
+		webSocketClientMain.connectToServer(ip, port,affectiveContoller,expressiveController);
+
 		/*if (!ClientDataSingleton.getInstance().isSessionMaintained()) {
 			ClientConfigurationSingleton.getInstance().setIp(ip);
 			ClientConfigurationSingleton.getInstance().setPort(port);

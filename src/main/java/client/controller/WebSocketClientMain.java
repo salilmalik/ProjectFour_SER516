@@ -20,6 +20,9 @@ public class WebSocketClientMain {
 	private static Object waitLock = new Object();
 	Thread clientThread;
 	Session session = null;
+	private AffectiveContoller affectiveContoller;
+	private ExpressiveController expressiveController;
+	private ClientSocketEndpoint clientSocketEndpoint;
 
 	/**
 	 * wait4TerminateSignal method synchronizes the web socket connection
@@ -42,10 +45,11 @@ public class WebSocketClientMain {
 	 * @param port
 	 *            : String with Server port number
 	 */
-	public void connectToServer(String ip, String port) {
+	public void connectToServer(String ip, String port, AffectiveContoller affectiveContoller, ExpressiveController expressiveController) {
 		ClientSocketEndpoint.setMainClientWebSocket(this);
 		String url = ClientConstants.WEB_SOCKETS_SCHEMA + ip + ClientConstants.COLON + port
 				+ ClientConstants.SERVER_DIR;
+		clientSocketEndpoint = new ClientSocketEndpoint(affectiveContoller,expressiveController);
 		Runnable serverTask = new Runnable() {
 
 			@Override
@@ -54,7 +58,7 @@ public class WebSocketClientMain {
 				try {
 					container = ContainerProvider.getWebSocketContainer();
 					System.out.println("URL: "+url);
-					session = container.connectToServer(ClientSocketEndpoint.class, URI.create(url));
+					session = container.connectToServer(clientSocketEndpoint.getClass(), URI.create(url));
 					//ClientDataSingleton.getInstance().setSessionMaintained(true);
 					wait4TerminateSignal();
 
@@ -78,4 +82,6 @@ public class WebSocketClientMain {
 	public Session getSession() {
 		return session;
 	}
+
+
 }

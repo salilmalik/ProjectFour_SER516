@@ -69,7 +69,7 @@ public class ClientMainController implements ClientControllerInterface {
 		expressiveGraphContoller = new ExpressiveGraphController(expressiveGraphView, expressiveDataModel);
 		expressiveController = new ExpressiveController(expressiveFaceContoller, expressiveGraphContoller,
 				expressiveView);
-		clientServerConnectionService = new ClientServerConnectionService();
+		clientServerConnectionService = new ClientServerConnectionService(affectiveContoller,expressiveController);
 		menuBarController = new MenuBarController(menuBarView, menuBarModel, clientServerConnectionService);
 	}
 
