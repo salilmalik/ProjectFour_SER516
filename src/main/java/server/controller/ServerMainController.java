@@ -1,103 +1,128 @@
 package server.controller;
 
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import server.constants.ServerConstants;
+import server.listener.LogListenerInterface;
+import server.listener.ServerListenerInterface;
+import server.model.ServerModelSingleton;
+import server.services.DetectionListenerService;
+import server.services.InteractiveListenerService;
+import server.services.ServerSocketService;
+import server.view.ServerView;
 
-import server.model.DetectionModel;
-import server.model.InteractiveModel;
-import server.model.ServerDataModel;
-import server.view.ConsoleView;
-import server.view.DetectionView;
-import server.view.InteractiveView;
-import server.view.ServerMainView;
+import javax.swing.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class ServerMainController implements ServerControllerInterface {
+/**
+ * The ServerMainController class sets and instantiates all listener services
+ * along with connection objects.
+ * 
+ * @author Team 06
+ * @version 1.0
+ */
+public class ServerMainController {
 
-	private InteractiveController interactiveController;
-	private DetectionController detectionController;
-	private ConsoleController consoleController;
-	private DetectionModel detectionModel;
-	private InteractiveModel interactiveModel;
-	private ConsoleView consoleView;
-	private DetectionView detectionView;
-	private InteractiveView interactiveView;
-	private ServerMainView serverMainView;
-	private ServerSocketEndpointController serverSocketEndpointController;
-	private ServerDataModel serverDataModel;
-
-	public ServerMainController() {
-		initilizeModels();
-		initializeViews();
-		initializeControllers();
-		new ServerSocketController().startServer(serverMainView);
+	public ServerMainController(ServerView serverView, ServerModelSingleton serverDataSingleton,
+                                ServerSocketService serverSocketService, InteractiveListenerService interactiveListenerService,
+                                DetectionListenerService detectionListenerService) {
+		addViewToController(serverView);
+		setListeners(serverView, interactiveListenerService, detectionListenerService, serverSocketService);
+		serverSocketService.startServer(serverView);
 	}
 
-	@Override
-	public void initializeViews() {
-		consoleView = new ConsoleView();
-		detectionView = new DetectionView(detectionModel);
-		interactiveView = new InteractiveView(interactiveModel);
-		serverMainView = new ServerMainView(consoleView, detectionView, interactiveView);
-		serverMainView.addWindowListener(new ServerMainListener());
+	/**
+	 * sets the log listener for server console panel
+	 * 
+	 * @param serverView
+	 */
+	private static void setLogListener(ServerView serverView) {
+		ServerSocketEndpoint.setLogListener(new LogListenerInterface() {
+			@Override
+			public void logMessage(String message) {
+				serverView.logMessage(message);
+			}
+		});
 	}
 
-	@Override
-	public void initilizeModels() {
-		detectionModel = new DetectionModel();
-		interactiveModel = new InteractiveModel();
-		serverDataModel = new ServerDataModel(detectionModel, interactiveModel);
+	/**
+	 * attaches view to the controller following mvc
+	 * 
+	 * @param serverView
+	 */
+	private static void addViewToController(ServerView serverView) {
+		try {
+			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if (ServerConstants.AQUA.equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException | javax.swing.UnsupportedLookAndFeelException | IllegalAccessException ex) {
+			Logger.getLogger(ServerView.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (InstantiationException ex) {
+			Logger.getLogger(ServerView.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		/**
+		 * Create and display the form in a new thread .
+		 */
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				serverView.setVisible(true);
+			}
+		});
 	}
 
-	@Override
-	public void initializeControllers() {
-		consoleController = new ConsoleController(consoleView);
-		detectionController = new DetectionController(detectionView, detectionModel);
-		interactiveController = new InteractiveController(interactiveView, interactiveModel);
-		serverSocketEndpointController = new ServerSocketEndpointController(serverMainView, serverDataModel);
+	/**
+	 * Performs dependency injection for loose coupling
+	 * 
+	 * @param serverView
+	 * @param interactiveListenerService
+	 * @param detectionListenerService
+	 * @param serverSocketService
+	 */
+	private void setListeners(ServerView serverView, InteractiveListenerService interactiveListenerService,
+                              DetectionListenerService detectionListenerService, ServerSocketService serverSocketService) {
+		setDetectionListener(serverView, detectionListenerService);
+		setLogListener(serverView);
+		setInteractiveListener(serverView, interactiveListenerService);
+		setServerStopListener(serverView, serverSocketService);
 	}
 
-	public class ServerMainListener implements WindowListener {
+	/**
+	 * Sets the server stop listener
+	 * 
+	 * @param serverView
+	 * @param serverSocketService
+	 */
+	private void setServerStopListener(ServerView serverView, ServerSocketService serverSocketService) {
+		serverView.setServerListener(new ServerListenerInterface() {
+			@Override
+			public void stopServer() {
+				serverSocketService.stopServer();
+			}
+		});
+	}
 
-		@Override
-		public void windowActivated(WindowEvent e) {
-			// TODO Auto-generated method stub
+	/**
+	 * Sets the listener for all fields in the detection panel
+	 * 
+	 * @param serverView
+	 * @param detectionListenerService
+	 */
+	private void setDetectionListener(ServerView serverView, DetectionListenerService detectionListenerService) {
+		detectionListenerService.setServerView(serverView);
+		ServerSocketEndpoint.setDetectionListenerService(detectionListenerService);
+		serverView.setDetectionListenerService(detectionListenerService);
+	}
 
-		}
-
-		@Override
-		public void windowClosed(WindowEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void windowClosing(WindowEvent e) {
-			new ServerSocketController().stopServer();
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void windowIconified(WindowEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void windowOpened(WindowEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
+	/**
+	 * Set the listener for all fields in interaction panel
+	 * 
+	 * @param serverView
+	 * @param interactiveListenerService
+	 */
+	private void setInteractiveListener(ServerView serverView, InteractiveListenerService interactiveListenerService) {
+		serverView.setInteractiveListener(interactiveListenerService);
 	}
 }

@@ -1,25 +1,25 @@
 package server.view;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import server.constants.ServerConstants;
+import server.services.DetectionListenerService;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import server.constants.ServerConstants;
-import server.model.DetectionModel;
-
-public class DetectionView extends JPanel {
+/**
+ * The DetectionPanel class creates the Detection Panel display that sets the
+ * clock timer along with the upperface, lowerface and eye features, also
+ * setting the Performance metrics.
+ * 
+ * @author Team 06
+ * @version 1.0
+ */
+public class FaceDetectionPanel extends JPanel implements ChangeListener, ActionListener,DetectionPanel {
 
 	JTextField timeTxtField;
 	JComboBox<String> upperfaceComboBox;
@@ -27,19 +27,18 @@ public class DetectionView extends JPanel {
 	JComboBox<String> lowerfaceComboBox;
 	JComboBox<String> eyeComboBox;
 	JCheckBox eyeAutoResetCheckBox;
-	private JCheckBox activateCheckBox;
-	private JRadioButton eyeActivateRadioButton;
+	JCheckBox activateCheckBox;
+	JRadioButton eyeActivateRadioButton;
 	JComboBox<String> performanceMetricsComboBox;
 	JSpinner performanceMetricsSpinner;
+	DetectionListenerService detectionListenerService;
 	JSpinner lowerfaceSpinner;
-	private DetectionModel detectionModel;
 
 	/**
 	 * Design and component setting for the detection panel
 	 */
-	public DetectionView(DetectionModel detectionModel) {
-		this.detectionModel = detectionModel;
-		this.setBackground(Color.LIGHT_GRAY);
+	public FaceDetectionPanel(Color color) {
+		this.setBackground(color);
 		this.setBorder(new TitledBorder(null, ServerConstants.DETECTION, TitledBorder.LEADING, TitledBorder.TOP,
 				ServerConstants.TEXT_FONT, null));
 		this.setBounds(11, 130, 474, 267);
@@ -87,11 +86,13 @@ public class DetectionView extends JPanel {
 		String[] upperfaceItems = new String[] { ServerConstants.RAISE_BROW, ServerConstants.FURROW_BROW };
 		upperfaceComboBox = new JComboBox<>(upperfaceItems);
 		upperfaceComboBox.setBounds(14, 98, 139, 25);
+		upperfaceComboBox.addActionListener(this);
 		this.add(upperfaceComboBox);
 		upperfaceSpinner = new JSpinner();
 		upperfaceSpinner.setModel(new SpinnerNumberModel(0.00, 0.00, 1.00, 0.1));
 		upperfaceSpinner.setBackground(Color.WHITE);
 		upperfaceSpinner.setBounds(161, 97, 55, 25);
+		upperfaceSpinner.addChangeListener(this);
 		this.add(upperfaceSpinner);
 	}
 
@@ -109,11 +110,13 @@ public class DetectionView extends JPanel {
 				ServerConstants.SMIRK_LEFT, ServerConstants.SMIRK_RIGHT, ServerConstants.SMILE };
 		lowerfaceComboBox = new JComboBox<>(lowerfaceItems);
 		lowerfaceComboBox.setBounds(250, 98, 123, 25);
+		lowerfaceComboBox.addActionListener(this);
 		this.add(lowerfaceComboBox);
 		lowerfaceSpinner = new JSpinner();
 		lowerfaceSpinner.setModel(new SpinnerNumberModel(0.00, 0.00, 1.00, 0.1));
 		lowerfaceSpinner.setForeground(Color.WHITE);
 		lowerfaceSpinner.setBounds(383, 97, 52, 25);
+		lowerfaceSpinner.addChangeListener(this);
 		this.add(lowerfaceSpinner);
 	}
 
@@ -130,18 +133,22 @@ public class DetectionView extends JPanel {
 				ServerConstants.LOOK_LEFT, ServerConstants.LOOK_RIGHT };
 		eyeComboBox = new JComboBox<>(eyeItems);
 		eyeComboBox.setBounds(14, 163, 139, 25);
+		eyeComboBox.addActionListener(this);
 		this.add(eyeComboBox);
-		setEyeActivateRadioButton(new JRadioButton(ServerConstants.ACTIVATE));
-		getEyeActivateRadioButton().setFont(ServerConstants.TEXT_FONT);
-		getEyeActivateRadioButton().setBackground(Color.GRAY);
-		getEyeActivateRadioButton().setForeground(Color.WHITE);
-		getEyeActivateRadioButton().setBounds(185, 164, 95, 25);
-		this.add(getEyeActivateRadioButton());
+		eyeActivateRadioButton = new JRadioButton(ServerConstants.ACTIVATE);
+		eyeActivateRadioButton.setFont(ServerConstants.TEXT_FONT);
+		eyeActivateRadioButton.setBackground(Color.GRAY);
+		eyeActivateRadioButton.setForeground(Color.WHITE);
+		eyeActivateRadioButton.setBounds(185, 164, 95, 25);
+		eyeActivateRadioButton.addActionListener(this);
+		this.add(eyeActivateRadioButton);
 		eyeAutoResetCheckBox = new JCheckBox(ServerConstants.AUTO_RESETS);
 		eyeAutoResetCheckBox.setForeground(Color.WHITE);
 		eyeAutoResetCheckBox.setFont(ServerConstants.TEXT_FONT);
 		eyeAutoResetCheckBox.setBackground(Color.GRAY);
 		eyeAutoResetCheckBox.setBounds(294, 164, 95, 25);
+		eyeAutoResetCheckBox.addActionListener(this);
+		eyeAutoResetCheckBox.addActionListener(this);
 		this.add(eyeAutoResetCheckBox);
 	}
 
@@ -159,28 +166,26 @@ public class DetectionView extends JPanel {
 				ServerConstants.STRESS, ServerConstants.RELAXATION, ServerConstants.EXCITEMENT, ServerConstants.FOCUS };
 		performanceMetricsComboBox = new JComboBox<>(pfMetricItems);
 		performanceMetricsComboBox.setBounds(14, 229, 139, 25);
+		performanceMetricsComboBox.addActionListener(this);
 		this.add(performanceMetricsComboBox);
 		performanceMetricsSpinner = new JSpinner();
 		performanceMetricsSpinner.setModel(new SpinnerNumberModel(0.00, 0.00, 1.00, 0.1));
 		performanceMetricsSpinner.setBounds(161, 229, 55, 25);
+		performanceMetricsSpinner.addChangeListener(this);
 		this.add(performanceMetricsSpinner);
 	}
 
-	public void addDetectionActionListeners(ActionListener detectionActionListener) {
-		upperfaceComboBox.addActionListener(detectionActionListener);
-		getEyeActivateRadioButton().addActionListener(detectionActionListener);
-		eyeAutoResetCheckBox.addActionListener(detectionActionListener);
-		eyeAutoResetCheckBox.addActionListener(detectionActionListener);
-		performanceMetricsComboBox.addActionListener(detectionActionListener);
-		eyeComboBox.addActionListener(detectionActionListener);
-		lowerfaceComboBox.addActionListener(detectionActionListener);
-		upperfaceComboBox.addActionListener(detectionActionListener);
-	}
-
-	public void addDetectionChangeListener(ChangeListener detectionChangeListener) {
-		performanceMetricsSpinner.addChangeListener(detectionChangeListener);
-		lowerfaceSpinner.addChangeListener(detectionChangeListener);
-		upperfaceSpinner.addChangeListener(detectionChangeListener);
+	/**
+	 * 
+	 * Sets group component layout for the detection panel
+	 */
+	private void initComponents() {
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		this.setLayout(layout);
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 400, Short.MAX_VALUE));
+		layout.setVerticalGroup(
+				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 300, Short.MAX_VALUE));
 	}
 
 	/**
@@ -193,28 +198,35 @@ public class DetectionView extends JPanel {
 	}
 
 	/**
+	 * Sets the detection listener
+	 * 
+	 * @param detectionListenerService
+	 */
+	public void setDetectionListenerService(DetectionListenerService detectionListenerService) {
+		this.detectionListenerService = detectionListenerService;
+	}
+
+	/**
 	 * Figures which operation is performed and performs operations on state change
 	 * listener
 	 * 
 	 * @param e
 	 *            Contains the event associated to the view
 	 */
+	@Override
 	public void stateChanged(ChangeEvent e) {
 		if (e.getSource() == lowerfaceSpinner) {
 			float lowerfaceValue = (float) ((double) lowerfaceSpinner.getValue());
 			String lowerfaceExp = (String) lowerfaceComboBox.getSelectedItem();
-			detectionModel.setLowerfaceValue(lowerfaceValue);
-			detectionModel.setLowerfaceExp(lowerfaceExp);
+			detectionListenerService.changeLowerface(lowerfaceExp, lowerfaceValue);
 		} else if (e.getSource() == upperfaceSpinner) {
 			float upperfaceValue = (float) ((double) upperfaceSpinner.getValue());
 			String upperfaceExp = (String) upperfaceComboBox.getSelectedItem();
-			detectionModel.setUpperfaceExp(upperfaceExp);
-			detectionModel.setUpperfaceValue(upperfaceValue);
+			detectionListenerService.changeUpperface(upperfaceExp, upperfaceValue);
 		} else if (e.getSource() == performanceMetricsSpinner) {
 			float metricsValue = (float) ((double) performanceMetricsSpinner.getValue());
 			String metricsExp = (String) performanceMetricsComboBox.getSelectedItem();
-			detectionModel.setMetricsExp(metricsExp);
-			detectionModel.setMetricsValue(metricsValue);
+			detectionListenerService.changePerformanceMatrics(metricsExp, metricsValue);
 		}
 	}
 
@@ -223,35 +235,35 @@ public class DetectionView extends JPanel {
 	 * 
 	 * @param e
 	 */
+	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		if (e.getSource() == upperfaceComboBox) {
 			float upperfaceValue = (float) ((double) upperfaceSpinner.getValue());
 			String upperfaceExp = (String) upperfaceComboBox.getSelectedItem();
-			detectionModel.setUpperfaceExp(upperfaceExp);
-			detectionModel.setUpperfaceValue(upperfaceValue);
+			detectionListenerService.changeUpperface(upperfaceExp, upperfaceValue);
 		} else if (e.getSource() == lowerfaceComboBox) {
 			float lowerfaceValue = (float) ((double) lowerfaceSpinner.getValue());
 			String lowerfaceExp = (String) lowerfaceComboBox.getSelectedItem();
-			detectionModel.setLowerfaceValue(lowerfaceValue);
-			detectionModel.setLowerfaceExp(lowerfaceExp);
+			detectionListenerService.changeLowerface(lowerfaceExp, lowerfaceValue);
 		} else if (e.getSource() == performanceMetricsComboBox) {
 			float metricsValue = (float) ((double) performanceMetricsSpinner.getValue());
 			String metricsExp = (String) performanceMetricsComboBox.getSelectedItem();
-			detectionModel.setMetricsExp(metricsExp);
-			detectionModel.setMetricsValue(metricsValue);
+			detectionListenerService.changePerformanceMatrics(metricsExp, metricsValue);
 		} else if (e.getSource() == eyeComboBox) {
 			String eye = (String) eyeComboBox.getSelectedItem();
-			if (getEyeActivateRadioButton().isSelected()) {
-				detectionModel.setEye(eye);
+			if (eyeActivateRadioButton.isSelected()) {
+				detectionListenerService.changeEye(eye);
 			}
-		} else if (e.getSource() == getEyeActivateRadioButton()) {
+
+		} else if (e.getSource() == eyeActivateRadioButton) {
 			String eye = (String) eyeComboBox.getSelectedItem();
-			if (getEyeActivateRadioButton().isSelected()) {
-				detectionModel.setEye(eye);
+			if (eyeActivateRadioButton.isSelected()) {
+				detectionListenerService.changeEye(eye);
 			}
 		} else if (e.getSource() == eyeAutoResetCheckBox) {
 			if (eyeAutoResetCheckBox.isSelected()) {
-				detectionModel.setEyeAutoResetCheckBox(true);
+				detectionListenerService.setEyeAutoResetCheckBox(true);
 			}
 		}
 	}
@@ -260,23 +272,7 @@ public class DetectionView extends JPanel {
 	 * Disables the eye active and eye auto reset
 	 */
 	public void disableActive() {
-		getEyeActivateRadioButton().setSelected(false);
+		eyeActivateRadioButton.setSelected(false);
 		eyeAutoResetCheckBox.setSelected(false);
-	}
-
-	public JRadioButton getEyeActivateRadioButton() {
-		return eyeActivateRadioButton;
-	}
-
-	public void setEyeActivateRadioButton(JRadioButton eyeActivateRadioButton) {
-		this.eyeActivateRadioButton = eyeActivateRadioButton;
-	}
-
-	public JCheckBox getActivateCheckBox() {
-		return activateCheckBox;
-	}
-
-	public void setActivateCheckBox(JCheckBox activateCheckBox) {
-		this.activateCheckBox = activateCheckBox;
 	}
 }

@@ -1,4 +1,4 @@
-package server.controller;
+package server.listener;
 
 /**
  * The ServerListenerInterface
@@ -6,7 +6,7 @@ package server.controller;
  * @author Team 06
  * @version 1.0
  */
-public interface ServerSocketInterface {
+public interface ServerListenerInterface {
 
 	public void stopServer();
 }

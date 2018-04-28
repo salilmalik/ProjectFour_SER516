@@ -1,8 +1,6 @@
 package server.constants;
 
-import java.awt.Font;
-
-import javax.swing.Icon;
+import java.awt.*;
 
 /**
  * The ServerConstants class contains all the constants used in the client.
@@ -24,6 +22,9 @@ public class ServerConstants {
 	public static final String STOP = "Stop";
 	public static final String SEND = "Send";
 	public static final Font TEXT_FONT = new Font("Papyrus", Font.BOLD, 12);
+	public static final Color FACESERVERCOLOR = new Color(204, 204, 204);
+	public static final Color HEARTSERVERCOLOR = new Color(205, 92, 92);
+	public static final Color SKINSERVERCOLOR = new Color(243, 239, 224);
 	public static final String INTERACTIVE = "Interactive";
 	public static final String TIME_INTERVAL = "<html>Time Interval:</html>";
 	public static final String AUTO_RESETS = "Auto Reset";
@@ -55,6 +56,29 @@ public class ServerConstants {
 	public static final String UPPER_FACE = "Upperface:";
 	public static final String PERFORMANCE_METRICS = "Performance Metrics:";
 	public static final String ACTIVATE = "Activate";
+	public static final String SYS_BP = "Systolic";
+	public static final String DIA_BP = "Diastolic";
+	public static final String HEART_BEAT = "Heart Beat";
+	public static final String BLOOD_METRICS = "Blood Metrics";
+	public static final String RBC = "Red Blood Cells Count";
+	public static final String WBC = "White Blood Cells Count";
+	public static final String PLATELETS = "Platelet Count";
+	public static final String HAEMO = "Haemoglobin";
 	public static String LOWERFACE = "Lowerface:";
 	public static String EYE = "Eye:";
+	public static final String COLOUR = "Color";
+    public static final String FAIR = "Fair";
+    public static final String DARK = "Dark";
+    public static final String PINK = "Pink";
+    public static final String GOLDEN = "Golden";
+    public static final String SENSITIVITY = "Sensitivity";
+    public static final String COLD = "Cold";
+    public static final String DUST = "Dust";
+    public static final String HEAT = "Heat";
+    public static final String SKIN_TYPE = "Skin Type";
+    public static final String NORMAL = "Normal";
+    public static final String OILY = "Oily";
+    public static final String DRY = "Dry";
+    public static final String COMBINATION = "Combination";
+	public static final String BP = "Blood Pressure";
 }

@@ -1,0 +1,30 @@
+# Compiled source #
+###################
+*.com
+*.dll
+*.exe
+*.o
+*.so
+*.class
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+
+# To ignore IDE (eclipse / intellij) related files #
+####################################################
+.classpath
+.project
+.settings
+.idea
+.metadata
+
+# To ignore ANTLR related files #
+#################################
+*.iml
+*.ipr
+
+# Folders #
+###########
+out/

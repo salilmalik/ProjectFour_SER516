@@ -58,6 +58,7 @@ public class WebSocketClientMain {
 					wait4TerminateSignal();
 
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, ClientConstants.SERVER_NOT_RUNNING);
 				} finally {
 					if (session != null) {
